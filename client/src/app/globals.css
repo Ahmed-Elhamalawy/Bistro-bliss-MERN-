@@ -8,3 +8,10 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+#mapPhoto {
+  background-image: url("../public/home/map.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

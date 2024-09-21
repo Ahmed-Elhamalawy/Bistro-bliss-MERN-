@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Appbar from "@/components/appbar";
 import "tailwindcss/tailwind.css";
+import Footer from "@/components/footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
       >
         <Appbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

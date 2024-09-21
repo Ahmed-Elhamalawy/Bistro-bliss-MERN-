@@ -4,13 +4,15 @@ const jwt = require("jsonwebtoken");
 
 const signUp = async (req, res, next) => {
   try {
-    const { username, email, password, isAdmin } = req.body;
+    const { username, email, password, isAdmin, phone, address } = req.body;
     const hashedPassword = await bcrypt.hash(password, 5);
     const user = new User({
       email,
       password: hashedPassword,
       isAdmin,
       username,
+      phone,
+      address,
     });
     await user.save();
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
