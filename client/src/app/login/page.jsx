@@ -2,8 +2,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const Login = () => {
   const router = useRouter();
@@ -30,17 +29,18 @@ const Login = () => {
 
   return (
     <>
-      <section className="w-[1600px] h-auto flex flex-col items-center justify-center relative bg-[#F9F9F7]">
-        <div className="w-[1600px] h-[200px] flex flex-col items-center gap-[24px]  ">
-          <h3 className="w-[487px] h-[96px] text-[100px] font-playfair text-center">
+      <section className="w-full h-auto flex flex-col items-center justify-center relative bg-[#F9F9F7]">
+        <div className="w-full max-w-[1600px] h-auto flex flex-col items-center gap-6 p-6">
+          <h3 className="text-[40px] md:text-[60px] lg:text-[100px] font-playfair text-center leading-tight">
             Login
           </h3>
         </div>
+
         <form
           onSubmit={handleSubmit}
-          className="mb-[50px]  bg-white shadow-lg rounded-lg p-8 w-[797px] h-auto flex flex-col "
+          className="mb-[50px] bg-white shadow-lg rounded-lg p-8 w-full max-w-[95%] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[797px] flex flex-col mx-auto"
         >
-          <div className="grid grid-cols-2 gap-6 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             <div>
               <label
                 htmlFor="email"
@@ -59,12 +59,12 @@ const Login = () => {
             <div>
               <label
                 htmlFor="password"
-                className="blocktext-[16px] font-bold text-[#2C2F24] mb-1"
+                className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
-                password
+                Password
               </label>
               <input
-                type="text"
+                type="password"
                 name="password"
                 placeholder="Enter your Password"
                 onChange={(e) => setPassword(e.target.value)}

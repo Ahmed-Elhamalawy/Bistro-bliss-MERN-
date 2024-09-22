@@ -13,45 +13,44 @@ const Register = () => {
   const [address, setAddress] = useState("");
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     const data = await axios.post("http://localhost:4500/createUser", {
       username,
       email,
       password,
-      confirmPassword,
       userType,
       phone,
       address,
     });
-
     // console.log(data);
-
-    e.preventDefault(); // Correctly preventing the default form submission
   };
+
   return (
     <>
-      <section className="w-[1600px] h-auto flex flex-col items-center justify-center relative bg-[#F9F9F7]">
-        <div className="w-[1600px] h-[200px] flex flex-col items-center gap-[24px]  ">
-          <h3 className="w-[487px] h-[96px] text-[100px] font-playfair text-center">
+      <section className="w-full h-auto flex flex-col items-center justify-center relative bg-[#F9F9F7]">
+        <div className="w-full max-w-[1600px] h-auto flex flex-col items-center gap-6 p-6">
+          <h3 className="text-[40px] md:text-[60px] lg:text-[100px] font-playfair text-center leading-tight">
             Register
           </h3>
         </div>
+
         <form
           onSubmit={handleSubmit}
-          className="mb-[50px]  bg-white shadow-lg rounded-lg p-8 w-[797px] h-auto flex flex-col "
+          className="mb-[50px] bg-white shadow-lg rounded-lg p-8 w-full max-w-[95%] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[797px] flex flex-col mx-auto"
         >
-          <div className="grid grid-cols-2 gap-6 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             <div>
               <label
                 htmlFor="userName"
-                className="blocktext-[16px] font-bold text-[#2C2F24] mb-1"
+                className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
-                userName
+                Username
               </label>
               <input
                 type="text"
                 name="username"
                 onChange={(e) => setUserName(e.target.value)}
-                placeholder="Enter your userName"
+                placeholder="Enter your username"
                 className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
@@ -74,15 +73,15 @@ const Register = () => {
             <div>
               <label
                 htmlFor="password"
-                className="blocktext-[16px] font-bold text-[#2C2F24] mb-1"
+                className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
-                password
+                Password
               </label>
               <input
-                type="text"
+                type="password"
                 id="password"
                 name="password"
-                placeholder="Enter your Password"
+                placeholder="Enter your password"
                 onChange={(e) => setPassword(e.target.value)}
                 className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
@@ -92,12 +91,12 @@ const Register = () => {
                 htmlFor="userType"
                 className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
-                userType
+                User Type
               </label>
               <input
-                type="userType"
+                type="text"
                 id="userType"
-                placeholder="Enter userType address"
+                placeholder="Enter user type"
                 onChange={(e) => setUserType(e.target.value)}
                 className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
@@ -105,7 +104,7 @@ const Register = () => {
             <div>
               <label
                 htmlFor="phone"
-                className="blocktext-[16px] font-bold text-[#2C2F24] mb-1"
+                className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
                 Phone
               </label>
@@ -120,15 +119,16 @@ const Register = () => {
             </div>
             <div>
               <label
-                htmlFor="adress"
+                htmlFor="address"
                 className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
-                Adress
+                Address
               </label>
               <input
-                type="adress"
-                name="adress"
-                placeholder="Enter adress address"
+                type="text"
+                id="address"
+                name="address"
+                placeholder="Enter your address"
                 onChange={(e) => setAddress(e.target.value)}
                 className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
@@ -139,11 +139,11 @@ const Register = () => {
             href={"/login"}
             className="text-end mb-2 hover:text-red-600 font-bold"
           >
-            have an acount already
+            Already have an account?
           </Link>
           <button
             type="submit"
-            className=" bg-[#AD343E] hover:bg-red-600 text-white font-medium py-2 px-4 rounded-full transition duration-300 ease-in-out w-full"
+            className="bg-[#AD343E] hover:bg-red-600 text-white font-medium py-2 px-4 rounded-full transition duration-300 ease-in-out w-full"
           >
             Signup
           </button>
