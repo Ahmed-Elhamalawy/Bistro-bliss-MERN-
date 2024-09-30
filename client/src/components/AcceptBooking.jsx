@@ -33,7 +33,6 @@ const Bookings = () => {
         `http://localhost:4500/acceptBooking/${bookingId}`
       );
       console.log("Booking accepted:", response.data);
-      // Handle successful acceptance (e.g., update UI, show success message)
       window.location.reload();
     } catch (err) {
       console.error("Error accepting booking:", err);
