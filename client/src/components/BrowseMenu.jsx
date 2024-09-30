@@ -23,7 +23,13 @@ const BrowseMenu = () => {
               key={index}
               className="border-2 border-[#DBDFD0] rounded-lg flex flex-col items-center justify-center text-center p-4"
             >
-              <Image src={img} alt={title} className="w-24 h-auto" />
+              <Image
+                width={24}
+                height={24}
+                src={img}
+                alt={title}
+                className="w-24 h-auto"
+              />
               <h1 className="text-xl font-semibold font-[DM Sans] text-[#2C2F24] mt-4">
                 {title}
               </h1>

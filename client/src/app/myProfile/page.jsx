@@ -1,11 +1,17 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter, redirect } from "next/navigation";
 
 const Profile = () => {
   const username = localStorage.getItem("username");
   const email = localStorage.getItem("email");
   const phone = localStorage.getItem("phone");
   const address = localStorage.getItem("address");
+  const userType = localStorage.getItem("userType");
+
+  if (!userType) {
+    redirect("unAuth");
+  }
 
   return (
     <>
@@ -18,6 +24,17 @@ const Profile = () => {
 
         <form className="mb-[50px] bg-white shadow-lg rounded-lg p-8 w-full max-w-[95%] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[797px] flex flex-col mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+            <div className="mb-6 col-span-2">
+              <label
+                htmlFor="subject"
+                className="block text-[16px] font-bold text-[#2C2F24] mb-1"
+              >
+                User Type
+              </label>
+              <div className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500">
+                {userType === "admin" ? "Admin" : "Client"}
+              </div>
+            </div>
             <div>
               <label
                 htmlFor="userName"

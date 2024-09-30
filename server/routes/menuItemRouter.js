@@ -6,5 +6,6 @@ router.post("/createItem", menuItemController.createItem);
 router.get("/getItems", menuItemController.getItems);
 router.put("/updateItem/:id", menuItemController.updateItem);
 router.delete("/deleteItem/:id", menuItemController.deleteItem);
+router.get("/getItemById/:id", menuItemController.getItemById);
 
 module.exports = router;

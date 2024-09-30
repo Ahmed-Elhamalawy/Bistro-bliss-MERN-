@@ -1,13 +1,25 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useRouter, redirect } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 const Login = () => {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const userType = localStorage.getItem("userType");
+    const token = localStorage.getItem("token");
+    switch (userType) {
+      case "client":
+        redirect("/");
+        break;
+      case "admin":
+        redirect("/adminpanel");
+        break;
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,14 +29,22 @@ const Login = () => {
     });
     localStorage.setItem("username", data.user.username);
     localStorage.setItem("email", data.user.email);
-    localStorage.setItem("userType", data.user.userType);
+    localStorage.setItem("userType", data.user.isAdmin);
     localStorage.setItem("phone", data.user.phone);
     localStorage.setItem("address", data.user.address);
     localStorage.setItem("id", data.user._id);
     localStorage.setItem("token", data.token);
+    if (data.user.bookings && data.user.bookings.length > 0) {
+      localStorage.setItem("bookingStatus", data.user.bookings[0].status);
+    } else {
+      localStorage.setItem("bookingStatus", "");
+    }
+
     console.log(data);
-    router.push("/");
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+    redirect("/");
   };
 
   return (

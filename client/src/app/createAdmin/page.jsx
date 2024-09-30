@@ -3,14 +3,20 @@ import { useState } from "react";
 import Link from "next/link";
 import React from "react";
 import axios from "axios";
+import { redirect } from "next/navigation";
 
-const Register = () => {
+const CreateAdmin = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isAdmin, setIsAdmin] = useState("");
+  const [isAdmin, setIsAdmin] = useState("admin");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const userType = localStorage.getItem("userType");
+
+  if (userType !== "admin") {
+    redirect("/unAuththorized");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +26,7 @@ const Register = () => {
       password,
       phone,
       address,
+      isAdmin,
     });
     console.log(data);
   };
@@ -117,6 +124,16 @@ const Register = () => {
                 className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
+            <div>
+              <input
+                type="text"
+                id="isAdmin"
+                name="isAdmin"
+                placeholder="Enter your isAdmin"
+                value={isAdmin}
+                className="hidden form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
           </div>
 
           <Link
@@ -137,4 +154,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default CreateAdmin;

@@ -38,7 +38,10 @@ const signUp = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate({
+      path: "bookings",
+      select: "status",
+    });
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -69,7 +72,7 @@ const updateUser = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-  const user = await User.find({});
+  const user = await User.find({}).populate("bookings");
   res.json(user);
 };
 module.exports = { signUp, login, updateUser, getAllUsers };

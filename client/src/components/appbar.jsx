@@ -9,28 +9,36 @@ import Twitter from "../public/twitter.svg";
 import Github from "../public/github.svg";
 import Logo from "../public/logo.svg";
 import Link from "next/link";
+import SmallMenu from "./smallMenu";
+import NavLink from "./NavLink";
 
 const Appbar = () => {
-  const token = localStorage.getItem("token");
   const [showMenu, setShowMenu] = useState(false);
+  const [token, setToken] = useState("");
+  const [username, setUsername] = useState("");
+  const [userType, setUserType] = useState("");
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+    setUsername(localStorage.getItem("username"));
+    setUserType(localStorage.getItem("userType"));
+  }, []);
+
+  const deleteToken = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
 
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
   };
 
-  const username = localStorage.getItem("username");
-  const deleteToken = () => {
-    localStorage.clear();
-
-    window.location.reload();
-  };
-
   return (
     <>
       {/* -----------------------Large screen Appbar-----------------------*/}
-      <section className="flex flex-col h-[129px] w-[1600px] text-[#F9F9F7]  max-sm:w-auto z-40 ">
-        <div className="w-[1600px] h-[45px] flex items-center justify-between px-36 bg-[#474747] max-sm:w-auto max-sm:justify-center max-sm:flex-col max-sm:h-auto  ">
-          <span className="flex items-center  w-[362px] h-[24px] gap-3  max-sm:text-sm">
+      <section className="flex flex-col h-[129px] w-auto text-[#F9F9F7]  max-sm:w-auto z-40 overflow-hidden ">
+        <div className="w-auto h-[45px] flex items-center justify-between px-[150px] bg-[#474747] max-sm:w-auto max-sm:justify-center max-sm:flex-col max-sm:h-auto  ">
+          <span className="flex items-center w-[362px] h-[24px] gap-3  max-sm:text-sm">
             <span className="flex items-center gap-3">
               <Call size={18} />
               <h3 className="text-[16px] w-[121px]">(414) 857 - 0107</h3>
@@ -47,70 +55,107 @@ const Appbar = () => {
             <Github size={27} />
           </span>
         </div>
-        <div className="mt-[9px] mb-[20px] w-[1600px] h-[55px] flex items-center flex-row justify-around text-center max-sm:hidden ">
-          <span className="flex justify-center text-center gap-3 ">
-            <Logo className="w-[56] h-[55]  max-sm:hidden " />
+        <div className="  w-auto h-auto flex flex-row  items-center justify-around text-center max-md:hidden ">
+          <span className="flex justify-center text-center  ">
+            <Logo
+              className={`${
+                userType === "admin" ? "hidden" : ""
+              } w-[80px] h-[55]  max-sm:hidden `}
+            />
 
             <Link
-              href={"/"}
-              className=" max-sm:hidden text-[43px] h-[30px] w-[210px] text-[#474747] font-playfair font-semibold italic"
+              href={userType === "admin" ? "/adminpanel" : "/"}
+              className=" max-sm:hidden text-[43px] h-[30px] w-full text-[#474747] font-playfair font-semibold italic"
             >
-              Bistro Bliss
+              {userType === "admin" ? "Admin Panel" : "Bistro Bliss"}
             </Link>
           </span>
-          <span className="font-['DM_Sans'] ">
-            <Link
-              href={"/"}
-              className="text-[#2C2F24] text-[16px] w-[74px] h-[32px] font-semibold"
+          <span
+            className={`${
+              userType === "admin" ? "hidden" : ""
+            } font-sans  gap-3 flex flex-row  justify-center items-center h-full translate-y-[50%]`}
+          >
+            <NavLink
+              href="/"
+              className={`text-[#2C2F24] text-[18px] w-[74px] h-full font-semibold `}
+              activeClassName="text-red-700 "
             >
               Home
-            </Link>
-            <button className="text-[#2C2F24] text-[16px] w-[74px] h-[32px] font-semibold">
-              About
-            </button>
-            <button className="text-[#2C2F24] text-[16px] w-[74px] h-[32px] font-semibold">
-              Menu
-            </button>
-            <button className="text-[#2C2F24] text-[16px] w-[74px] h-[32px] font-semibold">
-              Pages
-            </button>
-            <Link
-              href={"/contact"}
-              className="text-[#2C2F24] text-[16px] w-[74px] h-[32px] font-semibold"
+            </NavLink>
+            <NavLink
+              href="/about"
+              className={`text-[#2C2F24] text-[18px] w-[74px] h-full font-semibold`}
+              activeClassName="text-red-700  "
             >
-              contact
-            </Link>
+              About
+            </NavLink>
+            <NavLink
+              href="/ourMenu"
+              className={`text-[#2C2F24] text-[18px] w-[74px] h-full font-semibold`}
+              activeClassName="text-red-700  "
+            >
+              Menu
+            </NavLink>
+            <NavLink
+              href="/myBookings"
+              className={`text-[#2C2F24] text-[18px] w-[74px] h-full font-semibold`}
+              activeClassName="text-red-700  "
+            >
+              Bookings
+            </NavLink>
+            <NavLink
+              href="/myProfile"
+              className={`text-[#2C2F24] text-[18px] w-[74px] h-full font-semibold`}
+              activeClassName="text-red-700  "
+            >
+              Profile
+            </NavLink>
           </span>
           <div className="flex gap-2 items-center justify-center text-center ">
-            <span className="text-[#2C2F24] w-[147px] h-[48px] text-[16px] flex justify-center items-center border-2 border-[#2C2F24] rounded-3xl">
+            <span
+              className={`${
+                userType === "admin" ? "hidden" : ""
+              } text-[#2C2F24] w-[147px] h-[48px] text-[16px] flex justify-center items-center border-2 border-[#2C2F24] rounded-3xl`}
+            >
               <Link href={"/bookTable"}>Book a table</Link>
             </span>
-            <Link
-              href={"/login"}
-              className="text-[#2C2F24] text-[16px] w-[74px] h-[32px] font-semibold ml-5 "
-            >
-              <h3>
-                {token ? (
-                  <Link
-                    href={"/myProfile"}
-                    className="text-2xl text-[#AD343E] "
-                  >
-                    {username}
-                  </Link>
-                ) : null}
-              </h3>
-              {token ? <button onClick={deleteToken}>Logout</button> : "Login"}
-            </Link>
+            <span className="flex flex-col  justify-center items-center text-center">
+              <span
+                // href={"/login"}
+                className="text-[#2C2F24] text-[16px] w-[74px] h-[32px] font-semibold ml-5 "
+              >
+                <span
+                  className="font-sans text-2xl text-red-600 "
+                  onClick={(e) => e.preventDefault}
+                >
+                  {token ? (
+                    <h4>{username}</h4>
+                  ) : (
+                    <Link href={"/login"}>Login</Link>
+                  )}
+                  {/* Display username or "Login" */}
+                </span>
+              </span>
+
+              {token && (
+                <button
+                  className="font-sans text-gray-950 font-semibold text-lg"
+                  onClick={deleteToken}
+                >
+                  Logout
+                </button>
+              )}
+            </span>
           </div>
         </div>
         {/* -----------------------Mobile screen Appbar-----------------------*/}
-        <nav className="hidden  max-sm:w-auto max-sm:flex flex-row max-sm:items-center max-sm:justify-evenly max-sm:text-center bg-stone-200">
+        <nav className="hidden relative max-md:w-auto max-md:flex flex-row max-md:items-center max-md:justify-evenly max-md:text-center bg-stone-200">
           <div>
             <CgMenu
               onClick={toggleMenu}
               width={20}
               height={20}
-              className="cursor-pointer text-[#474747] hidden max-sm:block text-5xl border-2  rounded-md p-1 border-gray-400 hover:text-red-500"
+              className="cursor-pointer text-[#474747] hidden max-md:block text-5xl border-2  rounded-md p-1 border-gray-400 hover:text-red-500"
             />
           </div>
           <div className="flex gap-3 items-center justify-center">
@@ -122,38 +167,36 @@ const Appbar = () => {
               Bistro Bliss
             </Link>
           </div>
-          <div className="cursor-pointer max-sm:h-[78px] max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center text-red-500">
-            <Link
-              href={"/login"}
-              className="font-sans text-xl cursor-pointer font-bold text-red-600 "
-            >
-              <h3>
-                {token ? (
+          <div className="cursor-pointer max-md:h-[78px] max-md:flex max-md:flex-col max-md:items-center max-md:justify-center text-red-500">
+            <div className="flex flex-col justify-center items-center text-center">
+              {token ? (
+                <>
                   <Link
-                    href={"/myProfile"}
-                    className="text-2xl text-[#474747] "
+                    href="/myProfile"
+                    className="font-sans text-xl cursor-pointer font-bold text-red-600"
                   >
                     {username}
                   </Link>
-                ) : null}
-              </h3>
-              {token ? <button onClick={deleteToken}>Logout</button> : "Login"}
-            </Link>
+                  <button
+                    className="font-sans text-xl cursor-pointer font-bold text-black"
+                    onClick={deleteToken}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="font-sans text-xl cursor-pointer font-bold text-red-600"
+                >
+                  Login
+                </Link>
+              )}
+            </div>
           </div>
         </nav>
-        {showMenu && (
-          <menu className="hidden max-sm:flex max-sm:flex-col max-sm:w-full  gap-4 px-5 py-10 text-2xl bg-white opacity-90 font-sans text-[#474747] z-50">
-            <Link href={"/"} className="hover:text-red-600 cursor-pointer">
-              Home
-            </Link>
-            <h3 className="hover:text-red-600 cursor-pointer">About</h3>
-            <h3 className="hover:text-red-600 cursor-pointer">Menu</h3>
-            <h3 className="hover:text-red-600 cursor-pointer">Pages</h3>
-            <h3 className="hover:text-red-600 cursor-pointer">contact</h3>
-            <Link href={"/bookTable"}>Book a table</Link>
-          </menu>
-        )}
       </section>
+      {showMenu && <SmallMenu />}
     </>
   );
 };

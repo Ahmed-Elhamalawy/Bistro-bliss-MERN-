@@ -1,19 +1,17 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
+import Home from "./home/page";
+import AdminPanel from "./adminpanel/page";
 
-import ExploreCards from "@/components/ExploreCards";
-import UniqueServices from "@/components/UniqueServices";
-import BrowesMenu from "@/components/BrowseMenu";
-import Hero from "@/components/Hero";
+const App = () => {
+  const [userType, setUserType] = useState(null);
 
-const Home = () => {
-  return (
-    <>
-      <Hero />
-      <BrowesMenu />
-      <ExploreCards />
-      <UniqueServices />
-    </>
-  );
+  useEffect(() => {
+    const userType = localStorage.getItem("userType");
+    setUserType(userType);
+  }, []);
+
+  return <>{userType === "admin" ? <AdminPanel /> : <Home />}</>;
 };
 
-export default Home;
+export default App;
