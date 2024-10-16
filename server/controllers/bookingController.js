@@ -1,6 +1,10 @@
 const Booking = require("../models/bookingModel");
 const User = require("../models/userModel");
-const client = require("./twilio");
+//twilio
+const twilio = require("twilio");
+const accountSid = "AC0835c7db526f5705e6f33a9924434c8d";
+const authToken = "1796c9edc1634520b4cc7d6ce9f4a58f";
+const client = require("twilio")(accountSid, authToken);
 
 //my controllers
 const createBooking = async (req, res) => {
@@ -40,90 +44,87 @@ const getBookingsByUserId = async (req, res) => {
     res.status(500).json(error);
   }
 };
-const acceptBooking = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const booking = await Booking.findByIdAndUpdate(
-      id,
-      { $set: { status: "accepted" } },
-      { new: true, runValidators: true } // Run validation on the updated document
-    );
-    const user = await User.findById(booking.user);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    const messageBody = `Your booking is Accepted`;
-    const userPhoneNumber = user.phone; // User's phone number
-
-    await client.messages.create({
-      body: messageBody,
-      from: "+18026130219", // Replace with your Twilio phone number
-      to: userPhoneNumber, // User's phone number
-    });
-
-    res.status(200).json(booking);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-};
-
-// const declineBooking = async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const booking = await Booking.findByIdAndUpdate(
-//       id,
-//       { $set: { status: "rejected" } },
-//       { new: true, runValidators: true } // Run validation on the updated document
-//     );
-//     res.status(200).json(booking);
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// };
 
 const declineBooking = async (req, res) => {
   const { id } = req.params;
   try {
-    // Update the booking status to "rejected"
+    // Find the booking and update its status
     const booking = await Booking.findByIdAndUpdate(
       id,
       { $set: { status: "rejected" } },
       { new: true, runValidators: true }
     );
 
-    // If the booking is not found, return a 404 response
+    // Check if booking exists
     if (!booking) {
-      return res.status(404).json({ message: "Booking not found" });
+      return res.status(404).json({ error: "Booking not found" });
     }
 
-    // Find the user associated with the booking
+    // Fetch the user after getting the booking
     const user = await User.findById(booking.user);
 
-    // If the user is not found, return a 404 response
+    // Check if user exists
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ error: "User not found" });
     }
 
-    // Send SMS notification
-    const messageBody = `Your booking is Rejected`;
-    const userPhoneNumber = user.phone; // User's phone number
-
-    await client.messages.create({
-      body: messageBody,
-      from: "+18026130219", // Replace with your Twilio phone number
-      to: userPhoneNumber, // User's phone number
+    // Send a WhatsApp message to the user's phone number
+    const phoneNumber = user.phone; // Assuming user's phone number is stored in the 'phone' field
+    const message = await client.messages.create({
+      from: "whatsapp:+14155238886", // Twilio sandbox WhatsApp number or your live Twilio number
+      to: `whatsapp:${phoneNumber}`,
+      body: `Hello ${user.name}, your booking with ID: ${id} has been rejected.`,
     });
 
+    console.log("WhatsApp message sent:", message.sid);
+
+    // Return the updated booking
     res.status(200).json(booking);
   } catch (error) {
-    console.error(error); // Log the error for debugging
-    res
-      .status(500)
-      .json({ error: "An error occurred while declining the booking." });
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
-module.exports = declineBooking;
+const acceptBooking = async (req, res) => {
+  const { id } = req.params;
+  try {
+    // Find the booking and update its status
+    const booking = await Booking.findByIdAndUpdate(
+      id,
+      { $set: { status: "accepted" } },
+      { new: true, runValidators: true } // Run validation on the updated document
+    );
+
+    // Check if booking exists
+    if (!booking) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+
+    // Fetch the user after getting the booking
+    const user = await User.findById(booking.user);
+
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Send a WhatsApp message to the user's phone number
+    const phoneNumber = user.phone; // Assuming user's phone number is stored in the 'phone' field
+    const message = await client.messages.create({
+      from: "whatsapp:+14155238886", // Twilio sandbox WhatsApp number or your live Twilio number
+      to: `whatsapp:${phoneNumber}`,
+      body: `Hello ${user.name}, your booking with ID: ${id} has been accepted.`,
+    });
+
+    console.log("WhatsApp message sent:", message.sid);
+    // Return the updated booking
+    res.status(200).json(booking);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 module.exports = {
   createBooking,

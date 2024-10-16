@@ -1,10 +1,11 @@
+"use client";
 import { BiPlay } from "react-icons/bi";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { CiLocationOn } from "react-icons/ci";
 import { CiMail } from "react-icons/ci";
 import { BiPhone } from "react-icons/bi";
 import { AiOutlinePhone } from "react-icons/ai";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import heroImage from "../../public/about/aboutHero.png";
 import card1 from "../../public/about/card1.png";
@@ -14,8 +15,19 @@ import Maskgroup from "../../public/about/Maskgroup.png";
 import sophia from "../../public/about/sophia.png";
 import sophia2 from "../../public/about/sophia2.png";
 import sophia3 from "../../public/about/sophia3.png";
+import { redirect } from "next/navigation";
 
 const About = () => {
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const userType = localStorage.getItem("userType");
+    setUser(userType);
+    if (userType !== "client") {
+      redirect("/unAuth");
+    }
+  });
+
   return (
     <>
       <section className="mt-[85px] w-full place-items-center  grid grid-cols-2 max-md:grid-cols-1  items-center  mb-28">
