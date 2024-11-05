@@ -118,12 +118,6 @@ const CreateItem = () => {
             </div>
           </div>
 
-          <Link
-            href={"/login"}
-            className="text-end mb-2 hover:text-red-600 font-bold"
-          >
-            Already have an account?
-          </Link>
           <button
             type="submit"
             className="bg-[#AD343E] hover:bg-red-600 text-white font-medium py-2 px-4 rounded-full transition duration-300 ease-in-out w-full"

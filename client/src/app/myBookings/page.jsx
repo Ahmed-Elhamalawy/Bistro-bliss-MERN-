@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, redirect } from "next/navigation";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const MyBookings = () => {
   const [data, setData] = useState([]);
@@ -29,7 +30,12 @@ const MyBookings = () => {
   }, []);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, x: -1000 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 1000 }}
+      transition={{ duration: 0.3, stiffness: 50, type: "spring" }}
+    >
       <section className="mb-[300px] w-full h-auto flex flex-col items-center justify-center relative">
         <div className="w-full h-auto flex flex-col items-center gap-6 p-6">
           <h3 className="text-[28px] sm:text-[40px] md:text-[60px] lg:text-[100px] font-playfair text-center leading-tight">
@@ -66,7 +72,7 @@ const MyBookings = () => {
           </div>
         ))}
       </section>
-    </>
+    </motion.div>
   );
 };
 

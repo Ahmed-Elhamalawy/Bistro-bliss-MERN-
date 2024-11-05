@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { userRouter, redirect } from "next/navigation";
+import { motion } from "framer-motion";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Contact = () => {
   const [user, setUser] = useState("");
@@ -27,11 +30,13 @@ const Contact = () => {
         time,
         guests: parseInt(guests, 10), // Convert guests to an integer
       });
+      toast.success("table booked successfully");
     } catch (error) {
       console.error(
         "Error creating booking:",
         error.response?.data || error.message
       );
+      toast.error(error.response?.data || error.message);
       setError("Failed to create booking. Please try again.");
     } finally {
       setLoading(false);
@@ -44,7 +49,12 @@ const Contact = () => {
   }, []);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, x: -1000 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 1000 }}
+      transition={{ duration: 0.3, stiffness: 50, type: "spring" }}
+    >
       <section className="w-full h-auto flex flex-col items-center justify-center relative">
         <div className="w-full max-w-[1600px] h-auto flex flex-col items-center gap-6 bg-[#F9F9F7] p-6">
           <h3 className="text-[40px] md:text-[60px] lg:text-[100px] font-playfair text-center leading-tight">
@@ -64,7 +74,7 @@ const Contact = () => {
             <div className="hidden">
               <input
                 type="text"
-                id="id" // Added ID for the hidden input
+                id="id"
                 name="id"
                 value={id}
                 onChange={(e) => setId(e.target.value)}
@@ -73,7 +83,7 @@ const Contact = () => {
             </div>
             <div>
               <label
-                htmlFor="date" // Correctly referencing the ID
+                htmlFor="date"
                 className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
                 Date
@@ -90,7 +100,7 @@ const Contact = () => {
             </div>
             <div>
               <label
-                htmlFor="time" // Correctly referencing the ID
+                htmlFor="time"
                 className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
                 Time
@@ -107,13 +117,13 @@ const Contact = () => {
             </div>
             <div>
               <label
-                htmlFor="name" // Correctly referencing the ID
+                htmlFor="name"
                 className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
                 Name
               </label>
               <input
-                id="name" // Added ID for the user input
+                id="name"
                 name="user"
                 value={user}
                 onChange={(e) => setUser(e.target.value)}
@@ -124,7 +134,7 @@ const Contact = () => {
             </div>
             <div>
               <label
-                htmlFor="email" // Correctly referencing the ID
+                htmlFor="email"
                 className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
                 Email
@@ -134,7 +144,7 @@ const Contact = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
-                id="email" // Correctly referencing the ID
+                id="email"
                 placeholder="Enter email address"
                 className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
@@ -142,7 +152,7 @@ const Contact = () => {
           </div>
           <div className="mb-6">
             <label
-              htmlFor="guests" // Correctly referencing the ID
+              htmlFor="guests"
               className="block text-[16px] font-bold text-[#2C2F24] mb-1"
             >
               No. of Guests
@@ -151,7 +161,7 @@ const Contact = () => {
               name="guests"
               onChange={(e) => setGuests(e.target.value)}
               type="text"
-              id="guests" // Added ID for the guests input
+              id="guests"
               placeholder="Enter number of guests"
               className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
@@ -170,7 +180,7 @@ const Contact = () => {
           className="w-full h-[400px] lg:h-[647px] mt-48 lg:mt-64 bg-gray-200"
         ></div>
       </section>
-    </>
+    </motion.div>
   );
 };
 

@@ -16,6 +16,7 @@ import sophia from "../../public/about/sophia.png";
 import sophia2 from "../../public/about/sophia2.png";
 import sophia3 from "../../public/about/sophia3.png";
 import { redirect } from "next/navigation";
+import { motion } from "framer-motion";
 
 const About = () => {
   const [user, setUser] = useState("");
@@ -29,7 +30,12 @@ const About = () => {
   });
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, x: -1000 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 1000 }}
+      transition={{ duration: 0.3, stiffness: 50, type: "spring" }}
+    >
       <section className="mt-[85px] w-full place-items-center  grid grid-cols-2 max-md:grid-cols-1  items-center  mb-28">
         <div className="relative">
           <Image src={heroImage} alt="about" />
@@ -185,7 +191,7 @@ const About = () => {
           </div>
         </section>
       </section>
-      <section className="w-full h-auto pt-[98px] px-[152px] pb-[135px]">
+      <section className="w-full h-auto pt-[98px] max-md:px-[20px] lg:px-[152px] pb-[135px]">
         <h1 className="w-full text-center font-playfair text-[55px] leading-[60px] text-[#2C2F24] mb-[64px] max-lg:text-[40px] max-lg:leading-[50px]">
           What Our Customers Say
         </h1>
@@ -270,7 +276,7 @@ const About = () => {
           </span>
         </div>
       </section>
-    </>
+    </motion.div>
   );
 };
 

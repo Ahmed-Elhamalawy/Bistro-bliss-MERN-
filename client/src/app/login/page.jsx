@@ -3,52 +3,55 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter, redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { motion } from "framer-motion";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const userType = localStorage.getItem("userType");
-    const token = localStorage.getItem("token");
-    switch (userType) {
-      case "client":
-        redirect("/");
-        break;
-      case "admin":
-        redirect("/adminpanel");
-        break;
-    }
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post("http://localhost:4500/login", {
-      email: email,
-      password: password,
-    });
-    localStorage.setItem("username", data.user.username);
-    localStorage.setItem("email", data.user.email);
-    localStorage.setItem("userType", data.user.isAdmin);
-    localStorage.setItem("phone", data.user.phone);
-    localStorage.setItem("address", data.user.address);
-    localStorage.setItem("id", data.user._id);
-    localStorage.setItem("token", data.token);
-    if (data.user.bookings && data.user.bookings.length > 0) {
-      localStorage.setItem("bookingStatus", data.user.bookings[0].status);
-    } else {
-      localStorage.setItem("bookingStatus", "");
+    try {
+      const { data } = await axios.post("http://localhost:4500/login", {
+        email: email,
+        password: password,
+      });
+      localStorage.setItem("username", data.user.username);
+      localStorage.setItem("email", data.user.email);
+      localStorage.setItem("userType", data.user.isAdmin);
+      localStorage.setItem("phone", data.user.phone);
+      localStorage.setItem("address", data.user.address);
+      localStorage.setItem("id", data.user._id);
+      localStorage.setItem("token", data.token);
+      if (data.user.bookings && data.user.bookings.length > 0) {
+        localStorage.setItem("bookingStatus", data.user.bookings[0].status);
+      } else {
+        localStorage.setItem("bookingStatus", "");
+      }
+      toast.success("Login successful");
+      if (localStorage.getItem("userType") === "admin") {
+        window.location.href = "/adminpanel";
+      } else {
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1500);
+      }
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      toast.error("invalid credentials");
     }
-
-    console.log(data);
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
-    redirect("/");
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, x: -1000 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 1000 }}
+      transition={{ duration: 0.3, stiffness: 50, type: "spring" }}
+    >
       <section className="w-full h-auto flex flex-col items-center justify-center relative bg-[#F9F9F7]">
         <div className="w-full max-w-[1600px] h-auto flex flex-col items-center gap-6 p-6">
           <h3 className="text-[40px] md:text-[60px] lg:text-[100px] font-playfair text-center leading-tight">
@@ -60,6 +63,7 @@ const Login = () => {
           onSubmit={handleSubmit}
           className="mb-[50px] bg-white shadow-lg rounded-lg p-8 w-full max-w-[95%] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[797px] flex flex-col mx-auto"
         >
+          <ToastContainer />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             <div>
               <label
@@ -107,7 +111,7 @@ const Login = () => {
           </button>
         </form>
       </section>
-    </>
+    </motion.div>
   );
 };
 

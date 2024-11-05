@@ -11,6 +11,8 @@ import Logo from "../public/logo.svg";
 import Link from "next/link";
 import SmallMenu from "./smallMenu";
 import NavLink from "./NavLink";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Appbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -25,6 +27,7 @@ const Appbar = () => {
   }, []);
 
   const deleteToken = () => {
+    toast.success("Logout successful");
     localStorage.clear();
     window.location.href = "/";
   };
@@ -37,6 +40,7 @@ const Appbar = () => {
     <>
       {/* -----------------------Large screen Appbar-----------------------*/}
       <section className="flex flex-col h-[129px] w-auto text-[#F9F9F7]  max-sm:w-auto z-40 overflow-hidden ">
+        <ToastContainer />
         <div className="w-auto h-[45px] flex items-center justify-between px-[150px] bg-[#474747] max-sm:w-auto max-sm:justify-center max-sm:flex-col max-sm:h-auto  ">
           <span className="flex items-center w-[362px] h-[24px] gap-3  max-sm:text-sm">
             <span className="flex items-center gap-3">

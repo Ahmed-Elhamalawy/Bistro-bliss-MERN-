@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BeatLoader } from "react-spinners";
 import { redirect } from "next/navigation";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -46,52 +47,67 @@ const Home = () => {
   ];
 
   return (
-    <div className="w-full h-auto flex flex-col items-center justify-center">
-      <div className="w-full max-w-[1600px] h-auto flex flex-col items-center gap-6 bg-[#FFFFFF] p-6">
-        <h3 className="text-[40px] md:text-[60px] lg:text-[100px] font-playfair text-center leading-tight">
-          Our Menu
-        </h3>
-        <p className="text-[16px] md:text-[18px] text-center text-[#495460] font-sans max-w-[90%] md:max-w-[70%] lg:max-w-[50%] mb-6 md:mb-12">
-          We consider all the drivers of change gives you the components you
-          need to change to create a truly happens.
-        </p>
+    <motion.div
+      initial={{ opacity: 0, x: -1000 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 1000 }}
+      transition={{ duration: 0.3, stiffness: 50, type: "spring" }}
+    >
+      <div className="w-full h-auto flex flex-col items-center justify-center">
+        <div className="w-full max-w-[1600px] h-auto flex flex-col items-center gap-6 bg-[#FFFFFF] p-6">
+          <h3 className="text-[40px] md:text-[60px] lg:text-[100px] font-playfair text-center leading-tight">
+            Our Menu
+          </h3>
+          <p className="text-[16px] md:text-[18px] text-center text-[#495460] font-sans max-w-[90%] md:max-w-[70%] lg:max-w-[50%] mb-6 md:mb-12">
+            We consider all the drivers of change gives you the components you
+            need to change to create a truly happens.
+          </p>
 
-        {loading ? (
-          <div className="h-screen w-full flex items-center justify-center translate-y-[-50%]">
-            <BeatLoader color="#AD343E" size={25} />
-          </div>
-        ) : (
-          <div className="flex justify-center w-full h-[48px] gap-[15px] sm:w-[740px] md:w-[1000px] lg:w-[1200px]">
-            {categories.map((category) => (
-              <button
-                key={category.value}
-                className={`rounded-full border-2 border-[#DBDFD0] w-[150px] h-[48px] text-[16px] font-bold ${
-                  activeCategory === category.value
-                    ? "bg-red-500 text-white"
-                    : "bg-white"
-                }`}
-                onClick={() => {
-                  setActiveCategory(category.value);
-                }}
-              >
-                {category.name}
-              </button>
-            ))}
-          </div>
-        )}
+          {loading ? (
+            <div className="h-screen w-full flex items-center justify-center translate-y-[-50%]">
+              <BeatLoader color="#AD343E" size={25} />
+            </div>
+          ) : (
+            <div className=" flex justify-center w-full h-[48px] gap-[15px] sm:w-[740px] md:w-[1000px] lg:w-[1200px]">
+              {categories.map((category) => (
+                <button
+                  key={category.value}
+                  className={`rounded-full border-2 border-[#DBDFD0] w-[150px] h-[48px] text-[16px] font-bold ${
+                    activeCategory === category.value
+                      ? "bg-red-500 text-white"
+                      : "bg-white"
+                  }`}
+                  onClick={() => {
+                    setActiveCategory(category.value);
+                  }}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-[24px] gap-y-[24px] my-[88px]">
+          {filteredData.map((item) => (
+            <motion.div
+              initial={{ opacity: 0, y: 1000 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -1000 }}
+              transition={{ duration: 0.3, stiffness: 50, type: "spring" }}
+              className="m-0 p-0"
+            >
+              <CardItem
+                key={item._id}
+                name={item.name}
+                description={item.description}
+                price={item.price}
+                image={item.image}
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
-      <div className="  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-[24px] gap-y-[24px] my-[88px]">
-        {filteredData.map((item) => (
-          <CardItem
-            key={item._id}
-            name={item.name}
-            description={item.description}
-            price={item.price}
-            image={item.image}
-          />
-        ))}
-      </div>
-    </div>
+    </motion.div>
   );
 };
 

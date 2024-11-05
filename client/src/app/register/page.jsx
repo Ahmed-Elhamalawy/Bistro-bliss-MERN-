@@ -3,6 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import React from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [username, setUserName] = useState("");
@@ -14,16 +16,21 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await axios.post("http://localhost:4500/createUser", {
-      username,
-      email,
-      password,
-      phone,
-      address,
-    });
-    console.log(data);
+    try {
+      const data = await axios.post("http://localhost:4500/createUser", {
+        username,
+        email,
+        password,
+        phone,
+        address,
+      });
+      console.log(data);
+      toast.success("User created successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error creating user");
+    }
   };
-
   return (
     <>
       <section className="w-full h-auto flex flex-col items-center justify-center relative bg-[#F9F9F7]">
@@ -37,6 +44,7 @@ const Register = () => {
           onSubmit={handleSubmit}
           className="mb-[50px] bg-white shadow-lg rounded-lg p-8 w-full max-w-[95%] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[797px] flex flex-col mx-auto"
         >
+          <ToastContainer />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             <div>
               <label

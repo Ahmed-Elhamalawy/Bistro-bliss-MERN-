@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter, redirect } from "next/navigation";
+import { motion } from "framer-motion";
 
 const Profile = () => {
   const username = localStorage.getItem("username");
@@ -14,7 +15,12 @@ const Profile = () => {
   }
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, x: -1000 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 1000 }}
+      transition={{ duration: 0.3, stiffness: 50, type: "spring" }}
+    >
       <section className="w-full h-auto flex flex-col items-center justify-center relative bg-[#F9F9F7]">
         <div className="w-full max-w-[1600px] h-auto flex flex-col items-center gap-6 p-6">
           <h3 className="text-[40px] md:text-[60px] lg:text-[100px] font-playfair text-center leading-tight">
@@ -82,7 +88,7 @@ const Profile = () => {
           </div>
         </form>
       </section>
-    </>
+    </motion.div>
   );
 };
 

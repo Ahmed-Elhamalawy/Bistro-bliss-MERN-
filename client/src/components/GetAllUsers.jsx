@@ -32,7 +32,7 @@ const GetAllUsers = () => {
           <BeatLoader color="#AD343E" size={25} />
         </div>
       ) : (
-        <div className="md:overflow-x-auto">
+        <div>
           <table className="table-auto w-full md:w-[740px] mb-24">
             <thead className="bg-gray-100 font-bold text-xl font-sans ">
               <tr>
