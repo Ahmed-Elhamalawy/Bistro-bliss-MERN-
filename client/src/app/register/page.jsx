@@ -13,6 +13,7 @@ const Register = () => {
   const [isAdmin, setIsAdmin] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [error, setError] = useState("null");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +29,9 @@ const Register = () => {
       toast.success("User created successfully");
     } catch (error) {
       console.log(error);
+      console.log(error.response.data.message);
+      setError(error.response.data.message);
+
       toast.error("Error creating user");
     }
   };
@@ -46,7 +50,7 @@ const Register = () => {
         >
           <ToastContainer />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-            <div>
+            <div className="relative">
               <label
                 htmlFor="userName"
                 className="block text-[16px] font-bold text-[#2C2F24] mb-1"
@@ -60,14 +64,21 @@ const Register = () => {
                 placeholder="Enter your username"
                 className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
+              {error === "Username already exists" && (
+                <span className="text-red-500 absolute bottom-[-30px] left-0">
+                  {error}
+                </span>
+              )}
             </div>
-            <div>
+            <div className="relative">
               <label
                 htmlFor="email"
                 className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
                 Email
               </label>
+              {/* <span className="text-red-500">{emailError}</span> */}
+
               <input
                 type="email"
                 id="email"
@@ -76,6 +87,11 @@ const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
+              {error === "Email already exists" && (
+                <span className="text-red-500 absolute bottom-[-30px] left-0">
+                  {error}
+                </span>
+              )}
             </div>
             <div>
               <label
@@ -93,13 +109,14 @@ const Register = () => {
                 className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
-            <div>
+            <div className="relative">
               <label
                 htmlFor="phone"
                 className="block text-[16px] font-bold text-[#2C2F24] mb-1"
               >
                 Phone
               </label>
+
               <input
                 type="text"
                 id="phone"
@@ -108,6 +125,11 @@ const Register = () => {
                 onChange={(e) => setPhone(e.target.value)}
                 className="form-input w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
+              {error === "Phone number already exists" && (
+                <span className="text-red-500 absolute bottom-[-30px] left-0">
+                  {error}
+                </span>
+              )}
             </div>
             <div>
               <label

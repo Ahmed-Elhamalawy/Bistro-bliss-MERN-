@@ -1,0 +1,62 @@
+egg : https://res.cloudinary.com/dopolxpw2/image/upload/v1727032970/fried_eggs_mvg3q8.png
+pizza : https://res.cloudinary.com/dopolxpw2/image/upload/v1727032970/pizza_dyokfe.png
+cocktail : https://res.cloudinary.com/dopolxpw2/image/upload/v1727032968/cocktail_g1e2en.png
+burger : https://res.cloudinary.com/dopolxpw2/image/upload/v1727032968/burger_ydl7jw.png
+mint lemonade : https://res.cloudinary.com/dopolxpw2/image/upload/v1727032968/burger_ydl7jw.png
+cake : https://res.cloudinary.com/dopolxpw2/image/upload/v1727032968/cake_rkxfr7.png
+chocolate icecream : https://res.cloudinary.com/dopolxpw2/image/upload/v1727032968/chocolate_icecream_fjmjvi.png
+waffle : https://res.cloudinary.com/dopolxpw2/image/upload/v1727032967/waffle_m9ijaw.png
+
+
+
+
+[
+  {
+    "price": 9.99,
+    "name": "Fried Eggs",
+    "description": "Made with eggs, lettuce, salt, oil and other ingredients.",
+     "image":"https://res.cloudinary.com/dopolxpw2/image/upload/v1727032970/fried_eggs_mvg3q8."
+  },
+  {
+    "price": 15.99,
+    "name": "Hawaiian Pizza",
+    "description": "Made with eggs, lettuce, salt, oil and other ingredients.",
+     "image":"https://res.cloudinary.com/dopolxpw2/image/upload/v1727032970/pizza_dyokfe.png"
+  },
+  {
+    "price": 7.25,
+    "name": "Martinez Cocktail",
+    "description": "Made with eggs, lettuce, salt, oil and other ingredients.",
+    "image":"https://res.cloudinary.com/dopolxpw2/image/upload/v1727032968/cocktail_g1e2en.png"
+  },
+  {
+    "price": 20.99,
+    "name": "Butterscotch Cake",
+    "description": "Made with eggs, lettuce, salt, oil and other ingredients.",
+    "image":"https://res.cloudinary.com/dopolxpw2/image/upload/v1727032968/cake_rkxfr7.png"
+  },
+  {
+    "price": 5.89,
+    "name": "Mint Lemonade",
+    "description": "Made with eggs, lettuce, salt, oil and other ingredients.",
+   "image":"https://res.cloudinary.com/dopolxpw2/image/upload/v1727032968/burger_ydl7jw.png"
+  },
+  {
+    "price": 18.05,
+    "name": "Chocolate Icecream",
+    "description": "Made with eggs, lettuce, salt, oil and other ingredients.",
+    "image":"https://res.cloudinary.com/dopolxpw2/image/upload/v1727032968/chocolate_icecream_fjmjvi.png"
+  },
+  {
+    "price": 12.55,
+    "name": "Cheese Burger",
+    "description": "Made with eggs, lettuce, salt, oil and other ingredients.",
+     "image":"https://res.cloudinary.com/dopolxpw2/image/upload/v1727032968/burger_ydl7jw.png"
+  },
+  {
+    "price": 12.99,
+    "name": "Classic Waffles",
+    "description": "Made with eggs, lettuce, salt, oil and other ingredients.",
+    "image":"https://res.cloudinary.com/dopolxpw2/image/upload/v1727032967/waffle_m9ijaw.png"
+  }
+]

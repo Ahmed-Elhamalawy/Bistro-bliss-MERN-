@@ -27,7 +27,16 @@ const signUp = async (req, res, next) => {
     res.json({ user, token });
   } catch (error) {
     if (error.code === 11000) {
-      res.status(400).json({ message: "Username already exists" });
+      if (error.keyValue.username) {
+        res.status(400).json({ message: "Username already exists" });
+      } else if (error.keyValue.phone) {
+        res.status(400).json({ message: "Phone number already exists" });
+      } else if (error.keyValue.email) {
+        res.status(400).json({ message: "Email already exists" });
+      } else {
+        console.error(error);
+        res.status(500).json({ message: "Error creating user" });
+      }
     } else {
       console.error(error);
       res.status(500).json({ message: "Error creating user" });

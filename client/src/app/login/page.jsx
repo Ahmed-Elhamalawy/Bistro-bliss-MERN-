@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,8 +41,9 @@ const Login = () => {
       }
       console.log(data);
     } catch (error) {
+      setError(error.response.data.message);
       console.log(error);
-      toast.error("invalid credentials");
+      // toast.error("invalid credentials");
     }
   };
 
@@ -64,6 +66,7 @@ const Login = () => {
           className="mb-[50px] bg-white shadow-lg rounded-lg p-8 w-full max-w-[95%] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[797px] flex flex-col mx-auto"
         >
           <ToastContainer />
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             <div>
               <label
@@ -97,6 +100,11 @@ const Login = () => {
             </div>
           </div>
 
+          {error && (
+            <div className=" text-red-600  text-2xl p-4 rounded-lg mb-4">
+              <p className="text-center">{error}</p>
+            </div>
+          )}
           <Link
             href={"/register"}
             className="text-end mb-2 hover:text-red-600 font-bold"

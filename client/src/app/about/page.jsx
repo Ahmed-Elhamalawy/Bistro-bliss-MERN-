@@ -19,16 +19,6 @@ import { redirect } from "next/navigation";
 import { motion } from "framer-motion";
 
 const About = () => {
-  const [user, setUser] = useState("");
-
-  useEffect(() => {
-    const userType = localStorage.getItem("userType");
-    setUser(userType);
-    if (userType !== "client") {
-      redirect("/unAuth");
-    }
-  });
-
   return (
     <motion.div
       initial={{ opacity: 0, x: -1000 }}

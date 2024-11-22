@@ -95,21 +95,27 @@ const Appbar = () => {
             </NavLink>
             <NavLink
               href="/ourMenu"
-              className={`text-[#2C2F24] text-[18px] w-[74px] h-full font-semibold`}
+              className={`${userType === "client" ? "block" : "hidden"}
+               "
+                text-[#2C2F24] text-[18px] w-[74px] h-full font-semibold`}
               activeClassName="text-red-700  "
             >
               Menu
             </NavLink>
             <NavLink
               href="/myBookings"
-              className={`text-[#2C2F24] text-[18px] w-[74px] h-full font-semibold`}
+              className={`${
+                userType === "client" ? "block" : "hidden"
+              } text-[#2C2F24] text-[18px] w-[74px] h-full font-semibold`}
               activeClassName="text-red-700  "
             >
               Bookings
             </NavLink>
             <NavLink
               href="/myProfile"
-              className={`text-[#2C2F24] text-[18px] w-[74px] h-full font-semibold`}
+              className={`text-[#2C2F24] text-[18px] w-[74px] h-full font-semibold ${
+                userType === "client" ? "block" : "hidden"
+              }`}
               activeClassName="text-red-700  "
             >
               Profile
@@ -118,7 +124,7 @@ const Appbar = () => {
           <div className="flex gap-2 items-center justify-center text-center ">
             <span
               className={`${
-                userType === "admin" ? "hidden" : ""
+                userType === "client" ? "block" : "hidden"
               } text-[#2C2F24] w-[147px] h-[48px] text-[16px] flex justify-center items-center border-2 border-[#2C2F24] rounded-3xl`}
             >
               <Link href={"/bookTable"}>Book a table</Link>
@@ -135,7 +141,9 @@ const Appbar = () => {
                   {token ? (
                     <h4>{username}</h4>
                   ) : (
-                    <Link href={"/login"}>Login</Link>
+                    <Link className="font-sans text-[#2C2F24]" href={"/login"}>
+                      Login
+                    </Link>
                   )}
                   {/* Display username or "Login" */}
                 </span>

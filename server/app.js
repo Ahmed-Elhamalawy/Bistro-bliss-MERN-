@@ -8,8 +8,6 @@ const userRouter = require("./routes/userRouter");
 const menuItemRouter = require("./routes/menuItemRouter");
 const bookingRouter = require("./routes/bookingRouter");
 
-console.log("staaaaaaaaaaaaaaaaaaaaaaart!!!!!!!!");
-
 //middlewares
 app.use(cors());
 app.use(express.json());

@@ -12,13 +12,11 @@ const Bookings = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          "http://localhost:4500//getAllBookings"
+          "http://localhost:4500/getAllBookings"
         );
-        setTimeout(() => {
-          setData(response.data);
-          setLoading(false);
-        }, 1000);
         setData(response.data);
+        setLoading(false);
+        console.log(response.data, "user Data");
       } catch (error) {
         console.log(error);
       }
@@ -79,7 +77,7 @@ const Bookings = () => {
               {data.map((user) => (
                 <tr key={user._id}>
                   <td className="px-4 py-5 text-center font-sans border-b-2">
-                    {user.user.username || "username"}
+                    {(user.user && user.user.username) || "username"}
                   </td>
                   <td className="px-4 py-5 text-center font-sans border-b-2">
                     {user.time || "time"}
